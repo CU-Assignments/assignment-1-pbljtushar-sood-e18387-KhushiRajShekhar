@@ -1,0 +1,102 @@
+import java.util.Scanner;
+
+public class MatrixOperations {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Read dimensions for matrices
+        System.out.print("Enter number of rows for matrices: ");
+        int rows = scanner.nextInt();
+        System.out.print("Enter number of columns for matrices: ");
+        int cols = scanner.nextInt();
+
+        // Read first matrix
+        int[][] matrix1 = new int[rows][cols];
+        System.out.println("Enter elements of Matrix 1:");
+        readMatrix(scanner, matrix1);
+
+        // Read second matrix
+        int[][] matrix2 = new int[rows][cols];
+        System.out.println("Enter elements of Matrix 2:");
+        readMatrix(scanner, matrix2);
+
+        // Perform addition
+        System.out.println("\nAddition:");
+        printMatrix(addMatrices(matrix1, matrix2));
+
+        // Perform subtraction
+        System.out.println("\nSubtraction:");
+        printMatrix(subtractMatrices(matrix1, matrix2));
+
+        // Perform multiplication (only if valid)
+        System.out.print("\nEnter number of columns for second matrix in multiplication: ");
+        int mulCols = scanner.nextInt();
+        int[][] matrixB = new int[cols][mulCols];
+
+        System.out.println("Enter elements of Matrix 2 for multiplication:");
+        readMatrix(scanner, matrixB);
+
+        System.out.println("\nMultiplication:");
+        printMatrix(multiplyMatrices(matrix1, matrixB));
+
+        scanner.close();
+    }
+
+    // Method to read matrix
+    private static void readMatrix(Scanner scanner, int[][] matrix) {
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++) {
+                matrix[i][j] = scanner.nextInt();
+            }
+        }
+    }
+
+    // Method to add matrices
+    private static int[][] addMatrices(int[][] mat1, int[][] mat2) {
+        int[][] result = new int[mat1.length][mat1[0].length];
+        for (int i = 0; i < mat1.length; i++) {
+            for (int j = 0; j < mat1[i].length; j++) {
+                result[i][j] = mat1[i][j] + mat2[i][j];
+            }
+        }
+        return result;
+    }
+
+    // Method to subtract matrices
+    private static int[][] subtractMatrices(int[][] mat1, int[][] mat2) {
+        int[][] result = new int[mat1.length][mat1[0].length];
+        for (int i = 0; i < mat1.length; i++) {
+            for (int j = 0; j < mat1[i].length; j++) {
+                result[i][j] = mat1[i][j] - mat2[i][j];
+            }
+        }
+        return result;
+    }
+
+    // Method to multiply matrices
+    private static int[][] multiplyMatrices(int[][] mat1, int[][] mat2) {
+        int rows = mat1.length;
+        int cols = mat2[0].length;
+        int commonDim = mat1[0].length;
+        int[][] result = new int[rows][cols];
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                for (int k = 0; k < commonDim; k++) {
+                    result[i][j] += mat1[i][k] * mat2[k][j];
+                }
+            }
+        }
+        return result;
+    }
+
+    // Method to print matrix
+    private static void printMatrix(int[][] matrix) {
+        for (int[] row : matrix) {
+            for (int value : row) {
+                System.out.print(value + " ");
+            }
+            System.out.println();
+        }
+    }
+}
